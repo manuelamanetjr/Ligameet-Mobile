@@ -1,36 +1,37 @@
 import React from "react";
-import { View, FlatList, StyleSheet, TextInput } from "react-native";
-import ChatBubble from "../components/ChatBubble";
+import { View, FlatList } from "react-native";
+import ChatItem from "../components/ChatItem";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChatStackParamList } from "../navigation/ChatStack";
+import { useNavigation } from "@react-navigation/native";
 
-const messages = [
-  { id: "1", message: "Hi there!", isMe: false, avatar: require("../assets/avatar.jpg"), timestamp: "10:00 AM" },
-  { id: "2", message: "Hello! How's your team?", isMe: true, timestamp: "10:01 AM" },
-  { id: "3", message: "Going great, ready for the match.", isMe: false, avatar: require("../assets/avatar.jpg"), timestamp: "10:02 AM" },
+type ChatScreenNavigationProp = NativeStackNavigationProp<ChatStackParamList, "ChatList">;
+
+const chats = [
+  { chatId: "1", chatName: "Alice", lastMessage: "See you at the game!", isGroup: false, avatar: require("../assets/avatar1.jpg") },
+  { chatId: "2", chatName: "Team Volleyball", lastMessage: "Practice at 6pm", isGroup: true, avatar: require("../assets/team1.png") },
+  { chatId: "3", chatName: "Bob", lastMessage: "Good match yesterday!", isGroup: false, avatar: require("../assets/avatar2.jpg") },
 ];
 
 export default function ChatScreen() {
+  const navigation = useNavigation<ChatScreenNavigationProp>();
+
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
       <FlatList
-        data={messages}
-        keyExtractor={(item) => item.id}
+        data={chats}
+        keyExtractor={(item) => item.chatId}
         renderItem={({ item }) => (
-          <ChatBubble message={item.message} isMe={item.isMe} avatar={item.avatar} timestamp={item.timestamp} />
+          <ChatItem
+            chatId={item.chatId}
+            chatName={item.chatName}
+            lastMessage={item.lastMessage}
+            isGroup={item.isGroup}
+            avatar={item.avatar}
+            onPress={() => navigation.navigate("ChatDetail", { chatId: item.chatId, chatName: item.chatName })}
+          />
         )}
-        contentContainerStyle={{ padding: 16 }}
       />
-      <TextInput style={styles.input} placeholder="Type a message..." />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f2f2f2" },
-  input: {
-    height: 50,
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
-    paddingHorizontal: 16,
-    backgroundColor: "#fff",
-  },
-});

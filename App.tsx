@@ -1,11 +1,11 @@
-import { NavigationContainer } from "@react-navigation/native";
-import BottomTabs from "./src/navigation/BottomTabs";
 import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import AuthStack from "./src/navigation/AuthStack";
 
 export default function App() {
   return (
     <NavigationContainer>
-      <BottomTabs />
+      <AuthStack />
     </NavigationContainer>
   );
 }

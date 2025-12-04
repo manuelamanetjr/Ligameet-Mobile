@@ -6,7 +6,7 @@ export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Image source={require("../assets/avatar.jpg")} style={styles.avatar} />
+        <Image source={require("../assets/avatar3.jpg")} style={styles.avatar} />
         <Text style={styles.name}>John Doe</Text>
         <Text style={styles.sport}>Volleyball Player</Text>
       </View>
